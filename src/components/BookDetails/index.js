@@ -1,12 +1,12 @@
 import React from "react";
 
-const BookDetails = ({ id, name, description, price, author, handleEdit }) => {
+const BookDetails = ({ id, title, description, price, author, handleEdit }) => {
   const handleClick = () => {
     handleEdit(id);
   };
   return (
-    <div>
-      <h2>{name}</h2>
+    <div className="dashed-border-2 p-10 m-10">
+      <h2>{title}</h2>
       <p>{description}</p>
       <p>{author}</p>
       <p>Price: ${price}</p>

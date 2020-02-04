@@ -4,14 +4,23 @@ import { connect } from "react-redux";
 import BookDetails from "../BookDetails";
 import { handleEditBook } from "../../actions";
 
-const BookList = ({ bookList, editBookHandler }) => {
+const BookList = ({ searchBook, bookList, editBookHandler }) => {
+  if (!bookList) {
+    return <h1>No Books</h1>;
+  }
   return bookList.map(bookInfo => {
-    return <BookDetails {...bookInfo} handleEdit={editBookHandler} />;
+    return (
+      bookInfo &&
+      bookInfo.title &&
+      bookInfo.title.toLowerCase().includes(searchBook) && (
+        <BookDetails {...bookInfo} handleEdit={editBookHandler} />
+      )
+    );
   });
 };
 
 const mapStateToProps = ({ bookList }) => ({
-  bookList: bookList
+  bookList: [...bookList]
 });
 
 const mapDispatchToProps = {
