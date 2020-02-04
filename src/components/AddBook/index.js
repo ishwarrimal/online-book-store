@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 
-const AddBook = ({ addNewBook, newIndex }) => {
-  const [bookInfo, setBookInfo] = useState({});
+const AddBook = ({ addNewBook, newIndex, selectedIndex, bookList }) => {
+  let obj = {};
+  let index = null;
+  if (selectedIndex) {
+    index = bookList.findIndex(val => {
+      return val.id === selectedIndex;
+    });
+    obj = bookList[selectedIndex];
+  }
+  const [bookInfo, setBookInfo] = useState(obj);
   const handleFormChange = e => {
     const key = e.target.name;
     const newBookInfo = bookInfo;
@@ -16,7 +24,7 @@ const AddBook = ({ addNewBook, newIndex }) => {
 
   return (
     <div className="fixed container p-10">
-      <h1>Add your book</h1>
+      <h1>{index ? "Add" : "Edit"} your book</h1>
       <div>
         <span>Title:</span>
         <input

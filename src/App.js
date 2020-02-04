@@ -5,7 +5,14 @@ import BooksList from "./components/BooksList";
 import AddBook from "./components/AddBook";
 import { addNewBooks, updateShowForm } from "./actions";
 
-function App({ addNewBook, newIndex, showForm, updateShowForm }) {
+function App({
+  addNewBook,
+  newIndex,
+  showForm,
+  updateShowForm,
+  selectedIndex,
+  bookList
+}) {
   const [searchBook, setSearchBook] = useState("");
   const handleSearchChange = event => {
     setSearchBook(event.target.value);
@@ -23,10 +30,17 @@ function App({ addNewBook, newIndex, showForm, updateShowForm }) {
       />
       <AddNewBookButton handleAddBookClick={handleAddBookClick} />
       {searchBook && <p>Your search results:</p>}
-      <div className="p-10 mt-10">
+      <div className="p-10 mt-10" onClick={() => updateShowForm(false)}>
         <BooksList searchBook={searchBook} />
       </div>
-      {showForm && <AddBook addNewBook={addNewBook} newIndex={newIndex} />}
+      {showForm && (
+        <AddBook
+          addNewBook={addNewBook}
+          newIndex={newIndex}
+          selectedIndex={selectedIndex}
+          bookList={bookList}
+        />
+      )}
     </div>
   );
 }
@@ -48,10 +62,11 @@ function AddNewBookButton({ handleAddBookClick }) {
   );
 }
 
-const mapStateToProps = ({ showForm, lastIndex, selectedIndex }) => ({
+const mapStateToProps = ({ showForm, lastIndex, selectedIndex, bookList }) => ({
   showForm: showForm,
   newIndex: lastIndex + 1,
-  selectedIndex: selectedIndex
+  selectedIndex: selectedIndex,
+  bookList: bookList
 });
 
 const mapDispatchToProps = {
