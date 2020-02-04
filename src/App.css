@@ -48,9 +48,14 @@
 
 .container {
   width: 80%;
-  background: #f0e68c;
+  background: #f3efc8;
 }
 
 .flex-container {
   display: flex;
+  justify-content: space-between;
+}
+
+.addBookForm input {
+  display: block;
 }

@@ -1,29 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const AddBook = ({ addNewBook, newIndex, selectedIndex, bookList }) => {
-  let obj = {};
-  let index = null;
-  if (selectedIndex) {
-    index = bookList.findIndex(val => {
-      return val.id === selectedIndex;
-    });
-    obj = bookList[selectedIndex];
-  }
-  const [bookInfo, setBookInfo] = useState(obj);
+const AddBook = ({
+  addBookToBooksList,
+  newIndex,
+  selectedIndex,
+  bookList,
+  handleFormClose
+}) => {
+  const [index, setIndex] = useState(null);
+  const [bookInfo, setBookInfo] = useState({});
+  useEffect(() => {
+    let obj = {};
+    let id = null;
+    if (selectedIndex) {
+      id = bookList.findIndex(val => {
+        return val.id === selectedIndex;
+      });
+      obj = bookList[id];
+    }
+    setIndex(id);
+    setBookInfo(obj);
+  }, []);
   const handleFormChange = e => {
     const key = e.target.name;
     const newBookInfo = bookInfo;
     newBookInfo[key] = e.target.value;
-    setBookInfo(newBookInfo);
+    setBookInfo({ ...newBookInfo });
   };
-  const handleFormSubmit = e => {
+  const handleFormSubmit = () => {
     const bookDetail = bookInfo;
     bookDetail.id = newIndex;
-    addNewBook(bookDetail);
+    addBookToBooksList(bookDetail, index);
   };
-
   return (
-    <div className="fixed container p-10">
+    <div className="fixed container p-10 addBookForm">
       <h1>{index ? "Add" : "Edit"} your book</h1>
       <div>
         <span>Title:</span>
@@ -54,9 +64,14 @@ const AddBook = ({ addNewBook, newIndex, selectedIndex, bookList }) => {
           value={bookInfo.author}
           onChange={handleFormChange}
         />
-        <button type="submit" onClick={handleFormSubmit} value="submit">
-          Submit
-        </button>
+        <div className="mt-10">
+          <button type="submit" onClick={handleFormSubmit}>
+            Submit
+          </button>
+          <button type="submit" onClick={handleFormClose}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

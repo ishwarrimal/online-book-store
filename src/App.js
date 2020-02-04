@@ -3,10 +3,10 @@ import "./App.css";
 import { connect } from "react-redux";
 import BooksList from "./components/BooksList";
 import AddBook from "./components/AddBook";
-import { addNewBooks, updateShowForm } from "./actions";
+import { addBookToBooksList, updateShowForm } from "./actions";
 
 function App({
-  addNewBook,
+  addBookToBooksList,
   newIndex,
   showForm,
   updateShowForm,
@@ -20,25 +20,31 @@ function App({
   const handleAddBookClick = () => {
     updateShowForm(true);
   };
+  const handleFormClose = () => {
+    updateShowForm(false);
+  };
   console.log(newIndex);
   return (
     <div className="App">
       <h1 className="page-title">Your Book Store</h1>
-      <SearchBook
-        searchBook={searchBook}
-        handleSearchChange={handleSearchChange}
-      />
-      <AddNewBookButton handleAddBookClick={handleAddBookClick} />
+      <div className="flex-container">
+        <SearchBook
+          searchBook={searchBook}
+          handleSearchChange={handleSearchChange}
+        />
+        <AddNewBookButton handleAddBookClick={handleAddBookClick} />
+      </div>
       {searchBook && <p>Your search results:</p>}
-      <div className="p-10 mt-10" onClick={() => updateShowForm(false)}>
+      <div className="p-10 mt-10">
         <BooksList searchBook={searchBook} />
       </div>
       {showForm && (
         <AddBook
-          addNewBook={addNewBook}
+          addBookToBooksList={addBookToBooksList}
           newIndex={newIndex}
           selectedIndex={selectedIndex}
           bookList={bookList}
+          handleFormClose={handleFormClose}
         />
       )}
     </div>
@@ -70,7 +76,7 @@ const mapStateToProps = ({ showForm, lastIndex, selectedIndex, bookList }) => ({
 });
 
 const mapDispatchToProps = {
-  addNewBook: addNewBooks,
+  addBookToBooksList: addBookToBooksList,
   updateShowForm: updateShowForm
 };
 
