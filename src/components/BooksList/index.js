@@ -1,32 +1,21 @@
 import React from "react";
-// import { connect } from "react-redux";
-import BookDetails from "../BookDetails";
+import { connect } from "react-redux";
 
-const BookList = () => {
-  const bookList = [
-    {
-      id: 1,
-      name: "First Book",
-      description: "This is the description",
-      author: "ishwar",
-      price: "125"
-    },
-    {
-      id: 2,
-      name: "Second Book",
-      description: "This is the description",
-      author: "ishwar",
-      price: "125"
-    }
-  ];
+import BookDetails from "../BookDetails";
+import { handleEditBook } from "../../actions";
+
+const BookList = ({ bookList, editBookHandler }) => {
   return bookList.map(bookInfo => {
-    return <BookDetails {...bookInfo} />;
+    return <BookDetails {...bookInfo} handleEdit={editBookHandler} />;
   });
 };
 
-// const mapStateToProps = {
-//   bookList: booksList
-// };
+const mapStateToProps = ({ bookList }) => ({
+  bookList: bookList
+});
 
-// export default connect(null, null)(BookList);
-export default BookList;
+const mapDispatchToProps = {
+  editBookHandler: handleEditBook
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);

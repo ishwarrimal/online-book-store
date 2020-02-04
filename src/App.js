@@ -1,13 +1,20 @@
 import React from "react";
 import "./App.css";
+import { connect } from "react-redux";
 import BooksList from "./components/BooksList";
 
-function App() {
+function App({ showForm, selectedIndex }) {
   return (
     <div className="App">
       <BooksList />
+      {showForm && <h1>Show Form {selectedIndex}</h1>}
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = ({ showForm, selectedIndex }) => ({
+  showForm: showForm,
+  selectedIndex: selectedIndex
+});
+
+export default connect(mapStateToProps, null)(App);
