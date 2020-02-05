@@ -34,7 +34,7 @@ const AddBook = ({
   };
   return (
     <div className="fixed container p-10 addBookForm">
-      <h1>{index ? "Add" : "Edit"} your book</h1>
+      <h1>Your book details</h1>
       <div>
         <span>Title:</span>
         <input
